@@ -65,18 +65,15 @@ am5.ready(function() {
         textAlign: "center",
         centerY: am5.percent(50),
         fontSize: "1.5em",
-        fill: am5.color(0xffffff)
+        fill: am5.color(0xffffff),
+        text: "0"  // Initial text
     }));
 
-    axisDataItem.set("value", 20);  // Initial value
-
-    bullet.get("sprite").on("rotation", function() {
-        var value = axisDataItem.get("value");
-        label.set("text", Math.round(value).toString());
-    });
+    axisDataItem.set("value", 0);  // Initial value
 
     var colorSet = am5.ColorSet.new(root, {});
 
+    // Create existing ranges
     var axisRange0 = xAxis.createAxisRange(xAxis.makeDataItem({
         above: true,
         value: 0,
@@ -137,12 +134,51 @@ am5.ready(function() {
         forceHidden: true
     });
 
+    // Neon green overlay range
+    var neonGreenRange = xAxis.createAxisRange(xAxis.makeDataItem({
+        above: true,
+        value: 0,
+        endValue: 0
+    }));
+
+    neonGreenRange.get("axisFill").setAll({
+        visible: true,
+        fill: am5.color(0x39FF14)  // Neon green color
+    });
+
+    neonGreenRange.get("label").setAll({
+        forceHidden: true
+    });
+
     chart.appear(1000, 100);
 
     // Function to update gauge value
     window.updateGauge = function(bmi) {
         if (bmi >= 0 && bmi <= 40) {
             axisDataItem.set("value", bmi);
+
+            // Animate Needle Movement
+            var angle = (bmi / 40) * 180;  // Convert BMI to gauge angle
+            bullet.get("sprite").animate({
+                key: "rotation",
+                to: angle - 180,  // Adjust rotation based on gauge start angle
+                duration: 1000,  // Duration of the animation
+                easing: am5.ease.out(am5.ease.cubic)
+            });
+
+            // Update Neon Green Range
+            neonGreenRange.set("endValue", bmi);
+
+            // Animate Neon Green Fill
+            neonGreenRange.get("axisFill").set("fill", am5.color('#6fffe9'));  // Set color without animation
+
+            // Animate Text
+            label.animate({
+                key: "text",
+                to: Math.round(bmi).toString(),
+                duration: 1000,
+                easing: am5.ease.out(am5.ease.cubic)
+            });
         }
     };
 });

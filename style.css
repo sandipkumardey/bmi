@@ -12,24 +12,32 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    padding: 20px;  /* Add padding to avoid content touching edges on smaller screens */
 }
 
 .container {
     text-align: center;
     background-color: rgba(255, 255, 255, 0.05);
-    padding: 40px;
+    padding: 30px;  /* Further reduced padding */
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-width: 500px;  /* Further reduced max-width */
+    width: 100%;
 }
 
 h1 {
     margin-bottom: 20px;
-    font-size: 32px;
+    font-size: 28px;  /* Slightly smaller font size for better fit */
+}
+
+p {
+    color: #cccccc;  /* Color matching the text above the input fields */
+    margin-bottom: 20px;  /* Add margin to separate from other elements */
 }
 
 #chartdiv {
     width: 100%;
-    height: 500px;
+    height: 400px;  /* Reduced height for the chart */
     margin-bottom: 20px;
 }
 
@@ -38,7 +46,7 @@ h1 {
 }
 
 label {
-    font-size: 18px;
+    font-size: 16px;  /* Slightly smaller font size */
     display: block;
     margin-bottom: 5px;
     color: #cccccc;
@@ -47,8 +55,8 @@ label {
 input {
     margin: 10px 0;
     padding: 10px;
-    font-size: 16px;
-    width: 220px;
+    font-size: 14px;  /* Smaller font size */
+    width: 200px;  /* Further reduced width */
     border: 1px solid #444;
     background-color: #333;
     color: #fff;
@@ -63,7 +71,7 @@ input:focus {
 
 button {
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 14px;  /* Slightly smaller font size */
     background-color: #00b4d8;
     color: white;
     border: none;
@@ -84,7 +92,8 @@ button:active {
 @media (max-width: 600px) {
     .container {
         padding: 20px;
-        width: 90%;
+        width: 100%;  /* Ensure full width on small screens */
+        max-width: none;  /* Remove max-width constraint on small screens */
     }
 
     .inputs input,
