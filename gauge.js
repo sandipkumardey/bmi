@@ -74,64 +74,28 @@ am5.ready(function() {
     var colorSet = am5.ColorSet.new(root, {});
 
     // Create existing ranges
-    var axisRange0 = xAxis.createAxisRange(xAxis.makeDataItem({
-        above: true,
-        value: 0,
-        endValue: 18.5
-    }));
-    
-    axisRange0.get("axisFill").setAll({
-        visible: true,
-        fill: colorSet.getIndex(0)  // Underweight color
-    });
+    var axisRanges = [
+        { start: 0, end: 18.5, color: colorSet.getIndex(0) },
+        { start: 18.5, end: 24.9, color: colorSet.getIndex(1) },
+        { start: 24.9, end: 29.9, color: colorSet.getIndex(2) },
+        { start: 29.9, end: 40, color: colorSet.getIndex(3) }
+    ];
 
-    axisRange0.get("label").setAll({
-        forceHidden: true
-    });
+    axisRanges.forEach(range => {
+        var axisRange = xAxis.createAxisRange(xAxis.makeDataItem({
+            above: true,
+            value: range.start,
+            endValue: range.end
+        }));
 
-    var axisRange1 = xAxis.createAxisRange(xAxis.makeDataItem({
-        above: true,
-        value: 18.5,
-        endValue: 24.9
-    }));
+        axisRange.get("axisFill").setAll({
+            visible: true,
+            fill: range.color
+        });
 
-    axisRange1.get("axisFill").setAll({
-        visible: true,
-        fill: colorSet.getIndex(1)  // Normal weight color
-    });
-
-    axisRange1.get("label").setAll({
-        forceHidden: true
-    });
-
-    var axisRange2 = xAxis.createAxisRange(xAxis.makeDataItem({
-        above: true,
-        value: 24.9,
-        endValue: 29.9
-    }));
-
-    axisRange2.get("axisFill").setAll({
-        visible: true,
-        fill: colorSet.getIndex(2)  // Overweight color
-    });
-
-    axisRange2.get("label").setAll({
-        forceHidden: true
-    });
-
-    var axisRange3 = xAxis.createAxisRange(xAxis.makeDataItem({
-        above: true,
-        value: 29.9,
-        endValue: 40
-    }));
-
-    axisRange3.get("axisFill").setAll({
-        visible: true,
-        fill: colorSet.getIndex(3)  // Obesity color
-    });
-
-    axisRange3.get("label").setAll({
-        forceHidden: true
+        axisRange.get("label").setAll({
+            forceHidden: true
+        });
     });
 
     // Neon green overlay range
@@ -155,30 +119,75 @@ am5.ready(function() {
     // Function to update gauge value
     window.updateGauge = function(bmi) {
         if (bmi >= 0 && bmi <= 40) {
-            axisDataItem.set("value", bmi);
+            // Add popOut class to trigger the animation
+            var chartDiv = document.getElementById("chartdiv");
+            chartDiv.classList.add("popOut");
 
-            // Animate Needle Movement
-            var angle = (bmi / 40) * 180;  // Convert BMI to gauge angle
-            bullet.get("sprite").animate({
-                key: "rotation",
-                to: angle - 180,  // Adjust rotation based on gauge start angle
-                duration: 1000,  // Duration of the animation
-                easing: am5.ease.out(am5.ease.cubic)
-            });
+            // Reset gauge and clear inputs after 5 seconds
+            setTimeout(function() {
+                // Reset gauge value and Neon Green Range
+                resetGauge();
+                clearInputs();
+            }, 5000);  // 5 seconds delay
 
-            // Update Neon Green Range
-            neonGreenRange.set("endValue", bmi);
-
-            // Animate Neon Green Fill
-            neonGreenRange.get("axisFill").set("fill", am5.color('#6fffe9'));  // Set color without animation
-
-            // Animate Text
-            label.animate({
-                key: "text",
-                to: Math.round(bmi).toString(),
-                duration: 1000,
-                easing: am5.ease.out(am5.ease.cubic)
-            });
+            // Animate gauge
+            animateGauge(bmi);
         }
     };
+
+    // Function to animate gauge
+    function animateGauge(bmi) {
+        axisDataItem.set("value", bmi);
+
+        // Animate Needle Movement
+        var angle = (bmi / 40) * 180;  // Convert BMI to gauge angle
+        bullet.get("sprite").animate({
+            key: "rotation",
+            to: angle - 180,  // Adjust rotation based on gauge start angle
+            duration: 1000,  // Duration of the animation
+            easing: am5.ease.out(am5.ease.cubic)
+        });
+
+        // Update and Animate Neon Green Range
+        neonGreenRange.set("endValue", bmi);  // Update endValue
+
+        // Animate Neon Green Fill
+        neonGreenRange.get("axisFill").set("fill", am5.color('#6fffe9'));
+
+        // Animate Text
+        label.animate({
+            key: "text",
+            to: Math.round(bmi).toString(),
+            duration: 1000,
+            easing: am5.ease.out(am5.ease.cubic)
+        });
+    }
+
+    // Function to reset gauge
+    function resetGauge() {
+        axisDataItem.set("value", 0);
+        neonGreenRange.set("endValue", 0);
+
+        bullet.get("sprite").animate({
+            key: "rotation",
+            to: -180,  // Reset rotation to initial position
+            duration: 1000,
+            easing: am5.ease.out(am5.ease.cubic)
+        });
+
+        label.animate({
+            key: "text",
+            to: "0",
+            duration: 1000,
+            easing: am5.ease.out(am5.ease.cubic)
+        });
+
+        var chartDiv = document.getElementById("chartdiv");
+        chartDiv.classList.remove("popOut");
+    }
+
+    // Function to clear input fields
+    function clearInputs() {
+        document.querySelectorAll('input').forEach(input => input.value = '');
+    }
 });
