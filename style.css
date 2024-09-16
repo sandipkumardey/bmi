@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-image: linear-gradient(-20deg, #0d0d11 0%, #191933 100%);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.05); /* Slightly transparent background */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 32px;
+}
+
+.gauge {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    background: conic-gradient(#00ff00 0% 25%, #ffff00 25% 50%, #ff9900 50% 75%, #ff0000 75% 100%);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add shadow to gauge */
+}
+
+.dial {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    background-color: #1b1b1b;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.5); /* Inset shadow for a sunken effect */
+}
+
+#bmi-value {
+    font-size: 36px;
+    color: #fff;
+}
+
+#chartdiv {
+    width: 100%;
+    height: 500px;
+}
+
+.inputs {
+    margin-top: 20px;
+}
+
+label {
+    font-size: 18px;
+    display: block;
+    margin-bottom: 5px;
+    color: #cccccc; /* Updated label color */
+}
+
+input {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    width: 220px;
+    border: 1px solid #444;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-color: #00b4d8;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #00b4d8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #0096c7;
+    transform: translateY(-3px); /* Slight raise on hover */
+}
+
+button:active {
+    transform: translateY(0); /* Return to normal on click */
+}
