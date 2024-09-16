@@ -1,4 +1,4 @@
-Project Link- bmi-teal-beta.vercel.app
+Project Link- [bmi-teal-beta.vercel.app](https://bmi-teal-beta.vercel.app)
 
 https://www.amcharts.com/demos/animated-gauge/
 
