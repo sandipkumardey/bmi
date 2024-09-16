@@ -16,10 +16,10 @@ body {
 
 .container {
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.05); /* Slightly transparent background */
+    background-color: rgba(255, 255, 255, 0.05);
     padding: 40px;
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 h1 {
@@ -27,39 +27,10 @@ h1 {
     font-size: 32px;
 }
 
-.gauge {
-    position: relative;
-    width: 250px;
-    height: 250px;
-    background: conic-gradient(#00ff00 0% 25%, #ffff00 25% 50%, #ff9900 50% 75%, #ff0000 75% 100%);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add shadow to gauge */
-}
-
-.dial {
-    position: relative;
-    width: 180px;
-    height: 180px;
-    background-color: #1b1b1b;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.5); /* Inset shadow for a sunken effect */
-}
-
-#bmi-value {
-    font-size: 36px;
-    color: #fff;
-}
-
 #chartdiv {
     width: 100%;
     height: 500px;
+    margin-bottom: 20px;
 }
 
 .inputs {
@@ -70,7 +41,7 @@ label {
     font-size: 18px;
     display: block;
     margin-bottom: 5px;
-    color: #cccccc; /* Updated label color */
+    color: #cccccc;
 }
 
 input {
@@ -103,9 +74,25 @@ button {
 
 button:hover {
     background-color: #0096c7;
-    transform: translateY(-3px); /* Slight raise on hover */
+    transform: translateY(-3px);
 }
 
 button:active {
-    transform: translateY(0); /* Return to normal on click */
+    transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+        width: 90%;
+    }
+
+    .inputs input,
+    .inputs button {
+        width: 100%;
+    }
+
+    #chartdiv {
+        height: 300px;
+    }
 }
